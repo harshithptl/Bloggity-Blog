@@ -1,10 +1,13 @@
 const mysql = require('mysql');
+const fs = require('fs');
+const Logger = require('../logger.js');
+const logger = new Logger();
 
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "your_password",
-    database: "database"
+    database: "blogs"
   });
   
 function execute_query(query){
@@ -14,12 +17,18 @@ function execute_query(query){
                 // Returning the error
                 reject(err);
             }
+            
+            //Writing to a log file using a user defined log function that extended EventEmitter class
+            const writer = fs.createWriteStream('log.txt',{flags:'a'});
+            logger.once('Executed', ()=>{
+                writer.write(`Query executed ${query} \n`);
+            });
+            logger.log();
             resolve(result);
         });
     });
     
 }
-
 
 
 

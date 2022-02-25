@@ -1,9 +1,13 @@
 const db = require('../models/db');
+const fs = require('fs');
+const Logger = require('../logger.js');
+const logger = new Logger();
 
-const blog_index = (req, res) => {
+const all_blogs = (req, res) => {
     query="SELECT * FROM BLOGS;"
     db.execute_query(query)
       .then(result => {
+        
         res.render('index', { blogs: result, title: 'All blogs' });
       })
       .catch(err => {
@@ -23,11 +27,11 @@ const blog_index = (req, res) => {
       });
   }
   
-  const blog_create_get = (req, res) => {
+  const create_get = (req, res) => {
     res.render('create', { title: 'Create a new blog' });
   }
   
-  const blog_create_post = (req, res) => {
+  const create_blog = (req, res) => {
     values=req.body;
     query=`INSERT INTO BLOGS (title,snippet,body) VALUES ("${values.title}","${values.snippet}","${values.body}");`
     db.execute_query(query)
@@ -39,9 +43,9 @@ const blog_index = (req, res) => {
       });
   }
   
-  const blog_delete = (req, res) => {
+  const delete_blog = (req, res) => {
     const id = req.params.id;
-    query=`DELETE FROM BLOGS WHERE id=${id}`;
+    query=`DELETE FROM BLOGS WHERE id=${id};`;
     db.execute_query(query)
       .then(result => {
         res.json({ redirect: '/blogs' });
@@ -52,9 +56,9 @@ const blog_index = (req, res) => {
   }
   
   module.exports = {
-    blog_index, 
+    all_blogs, 
     blog_details, 
-    blog_create_get, 
-    blog_create_post, 
-    blog_delete
+    create_get, 
+    create_blog, 
+    delete_blog
   }

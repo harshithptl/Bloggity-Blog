@@ -2,19 +2,14 @@ const express = require('express');
 
 const blogRoutes = require('./routes/routes');
 
-// express app
+//Express App
 const app = express();
 
-
-
-
-
-
-// register view engine
+// Register View Engine
 app.set('view engine', 'ejs');
 app.listen(3000);
 
-// middleware & static files
+// Middleware and Static Files
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 

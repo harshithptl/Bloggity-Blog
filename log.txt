@@ -1,0 +1,6 @@
+Query executed SELECT * FROM BLOGS; 
+Query executed INSERT INTO BLOGS (title,snippet,body) VALUES ("New one","lessgo ","pls work man"); 
+Query executed SELECT * FROM BLOGS; 
+Query executed SELECT * FROM BLOGS WHERE id=12 
+Query executed DELETE FROM BLOGS WHERE id=12; 
+Query executed SELECT * FROM BLOGS; 
