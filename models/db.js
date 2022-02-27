@@ -6,7 +6,7 @@ const logger = new Logger();
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "your_password",
+    password: "harshith7",
     database: "blogs"
   });
   
@@ -29,8 +29,6 @@ function execute_query(query){
     });
     
 }
-
-
 
 module.exports={
     execute_query
