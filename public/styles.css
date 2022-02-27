@@ -14,6 +14,23 @@ p, h1, h2, h3, a, ul{
     color: #222;
 }
 
+.alert {
+    padding: 20px;
+    width: 35%;
+    background-color: #32cd32;
+    color: white;
+    position: fixed;
+  }
+  
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}
 /* nav & footer styles */
 nav{
     display: flex;

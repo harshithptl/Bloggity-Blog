@@ -41,11 +41,6 @@ app.get('/about', (req, res) => {
   res.render('about', { title: 'About' });
 });
 
-// Login Routes
-app.get('/login',(req,res) => {
-  res.render('login',{title: 'Login'});
-});
-
 // Blog Routes
 app.use('/blogs', blogRoutes);
 app.use(loginRoutes);

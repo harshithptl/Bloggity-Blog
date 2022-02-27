@@ -46,9 +46,11 @@ const login = (req, res) => {
                     res.status(403).render('login', { message: "Invalid combination of email and password" });
                 }
                 else {
+                    req.session.name = result[0]['name'];
                     req.session.user_id = result[0]['id'];
                     req.session.linkedin = result[0]['linkedin'];
                     req.session.github = result[0]['github'];
+                    req.session.flag = 0;
                     res.redirect(`/blogs`);
                 }
             }

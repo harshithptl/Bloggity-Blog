@@ -5,8 +5,13 @@ const all_blogs = (req, res) => {
     query=`SELECT * FROM BLOGS WHERE user_id=${user_id};`
     db.execute_query(query)
       .then(result => {
+        if (req.session.flag==0){
+          req.session.flag=1;
+          res.render('index', { blogs: result, title: 'All blogs', linkedin: req.session.linkedin, github: req.session.github, name: req.session.name, flag: 0});
+        }else{
+          res.render('index', { blogs: result, title: 'All blogs', linkedin: req.session.linkedin, github: req.session.github, name: req.session.name, flag: 1});
+        }
         
-        res.render('index', { blogs: result, title: 'All blogs', linkedin: req.session.linkedin, github: req.session.github});
       })
       .catch(err => {
         console.log(err);
