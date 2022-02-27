@@ -6,7 +6,7 @@ const logger = new Logger();
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "harshith7",
+    password: "your_password",
     database: "blogs"
   });
   
