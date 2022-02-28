@@ -3,6 +3,7 @@ const loginController = require('../controllers/loginController');
 
 const router = express.Router();
 
+// Login routes
 router.get('/login', loginController.redirectHome, loginController.login_home);
 router.post('/login', loginController.redirectHome, loginController.login);
 router.get('/signup', loginController.redirectHome, loginController.signup);

@@ -3,6 +3,7 @@ const fs = require('fs');
 const Logger = require('../logger.js');
 const logger = new Logger();
 
+// Database details
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -10,6 +11,7 @@ const con = mysql.createConnection({
     database: "blogs"
   });
   
+// Function to execute query and return results if applicable
 function execute_query(query){
     return new Promise((resolve, reject) => {
         con.query(query, function(err, result, fields) {

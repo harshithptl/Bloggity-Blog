@@ -14,24 +14,7 @@ p, h1, h2, h3, a, ul{
     color: #222;
 }
 
-.alert {
-    padding: 20px;
-    width: 35%;
-    background-color: #32cd32;
-    color: white;
-    position: fixed;
-  }
-  
-.closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-}
-/* nav & footer styles */
+/* nav Styles */
 nav{
     display: flex;
     justify-content: space-between;
@@ -88,7 +71,7 @@ h3{
     margin-left: 20px;
 }
 
-/* index styles */
+/* Index Styles */
 .blogs a{
     display: block;
     margin: 40px 0;
@@ -98,7 +81,7 @@ h3{
 .blogs a:hover h3{
     color: #32cd32;
 }
-/* details styles */
+/* Details Styles */
 .details{
     position: relative;
 }
@@ -119,21 +102,27 @@ h3{
     transition: 0.1s;
 }
 
-/* create styles */
+/* Login Styles */
 .login-page{
     position: absolute;
     top:21%;
-    left: 38%;
-    
+    left: 38%; 
 }
 .login-page h3{
     text-align: center;
     margin-bottom: 40px;
 }
+.login-page a{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
 .message{
     text-align: center;
     margin-top: 40px;
 }
+
+/* Sign-Up Styles */
 .signup-page{
     position: absolute;
     left: 38%;
@@ -143,11 +132,8 @@ h3{
     text-align: center;
     margin-bottom: 20px;
 }
-.login-page a{
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-}
+
+/* Form Styles */
 form{
     max-width: 325px;
     margin: 0 auto;
@@ -187,6 +173,8 @@ button {
     box-shadow: 0 15px 30px rgba(black,.1);
     border: 0;
 }
+
+/* Footer styles */
 footer{
     text-align: center;
   width: 100%;
@@ -194,9 +182,30 @@ footer{
   display:flex;
   margin-left: 45%;
   }
+
+/* LinkedIn and Github styles */
 .icons .fa{
     color: black;
     margin: 0 20px;
     cursor: pointer;
     padding: 18px 0;
   }
+
+/* Login popup message */
+.alert {
+padding: 20px;
+width: 35%;
+background-color: #32cd32;
+color: white;
+position: fixed;
+  }
+  
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}

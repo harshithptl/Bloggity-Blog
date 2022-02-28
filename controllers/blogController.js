@@ -1,5 +1,7 @@
 const db = require('../models/db');
 
+
+// Display all blogs on dashboard
 const all_blogs = (req, res) => {
     const user_id = req.session.user_id;
     query=`SELECT * FROM BLOGS WHERE user_id=${user_id};`
@@ -18,6 +20,7 @@ const all_blogs = (req, res) => {
       });
   }
   
+  // Individual blog
   const blog_details = (req, res) => {
     const user_id = req.session.user_id;
     const blog_id = req.params.blog_id;
@@ -31,11 +34,12 @@ const all_blogs = (req, res) => {
       });
   }
   
+  // Create blog page 
   const create_get = (req, res) => {
-    
     res.render('create', { title: 'Create a new blog', linkedin: req.session.linkedin, github: req.session.github });
   }
   
+  // Create blog through POST request
   const create_blog = (req, res) => {
     const user_id = req.session.user_id;
     values=req.body;
@@ -49,6 +53,7 @@ const all_blogs = (req, res) => {
       });
   }
   
+  // Delete blog
   const delete_blog = (req, res) => {
     const user_id = req.session.user_id;
     const blog_id = req.params.blog_id;

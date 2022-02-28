@@ -2,6 +2,8 @@ const db = require('../models/db');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
+// Redirecting according to authenticated user
 const redirectLogin = (req, res, next) => {
     if (!req.session.user_id) {
         res.redirect('/login');
@@ -18,6 +20,7 @@ const redirectHome = (req, res, next) => {
     }
 }
 
+// Login and Sign-Up Controllers
 const login_home = (req, res) => {
     if (req.status == 403) {
         res.render('login', { message: "Invalid combination of email and password" });
@@ -72,6 +75,7 @@ const create_user = (req, res) => {
     const github = req.body.github;
     query = `SELECT * FROM USERS WHERE EMAIL LIKE "${email}"`;
 
+    // Validation for user. If user does not exist accept details and create user
     db.execute_query(query)
         .then(result => {
 
@@ -95,6 +99,7 @@ const create_user = (req, res) => {
 
 }
 
+// Destroying session upon Sign-Out
 const signout = (req, res) => {
     req.session.destroy(err => {
         if (err) {
