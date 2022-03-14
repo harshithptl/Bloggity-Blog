@@ -2,15 +2,20 @@ const express = require('express');
 var session = require('express-session');
 const blogRoutes = require('./routes/blogRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const mongoose=require('mongoose');
 
 //Express app
 const app = express();
 
-// Register View Engine
+//Register View Engine
 app.set('view engine', 'ejs');
 
-// Listen for requests on 3000 port
-app.listen(3000);
+//Connect to mongodb and listen for requests
+const dbURI = "mongodb+srv://username:password7@blogs.ph2hv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(result => app.listen(3000))   // Listen for requests on 3000 port if connection is successful
+  .catch(err => console.log(err));
 
 // Middleware and Static Files
 app.use(express.static('public'));

@@ -34,11 +34,11 @@ const login = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    query = `SELECT * FROM USERS WHERE EMAIL LIKE "${email}";`;
-
-    db.execute_query(query)
-        .then(result => {
+    query=db.Users.find({email:`${email}`});
+    query.then(result => {
+            
             if (result.length == 0) {
+                db.log(`No user found for ${email}`);
                 res.status(403).render('login', { message: "Invalid combination of email and password" });
             }
             else {
@@ -46,9 +46,11 @@ const login = (req, res) => {
                 const password_check = bcrypt.compareSync(password, result[0].password.toString());
 
                 if (password_check == false) {
+                    db.log(`Incorrect password for ${email}`);
                     res.status(403).render('login', { message: "Invalid combination of email and password" });
                 }
                 else {
+                    db.log(`User login successful for ${email}`);
                     req.session.name = result[0]['name'];
                     req.session.user_id = result[0]['id'];
                     req.session.linkedin = result[0]['linkedin'];
@@ -73,19 +75,21 @@ const create_user = (req, res) => {
 
     const linkedin = req.body.linkedin;
     const github = req.body.github;
-    query = `SELECT * FROM USERS WHERE EMAIL LIKE "${email}"`;
+
+    query=db.Users.find({email:`${email}`});
 
     // Validation for user. If user does not exist accept details and create user
-    db.execute_query(query)
-        .then(result => {
+    query.then(result => {
 
             if (result.length > 0) {
+                db.log(`User with ${email} exists`);
                 res.status(403).render('login', { message: "User already exists. Please login!" });
             }
             else {
-                query = `INSERT INTO USERS (name,email,password,linkedin,github) VALUES ("${name}","${email}","${password}","${linkedin}","${github}");`
-                db.execute_query(query)
-                    .then(result => {
+                const user = new db.Users({name:`${name}`,email:`${email}`,password:`${password}`,linkedin:`${linkedin}`,github:`${github}`});
+                query=user.save();
+                query.then(result => {
+                        db.log(`Sign-Up for ${email} successful`);
                         res.render('login', { message: "Sign-Up Successful. Please login." });
                     })
                     .catch(err => {
@@ -105,6 +109,7 @@ const signout = (req, res) => {
         if (err) {
             return res.redirect('/');
         }
+        db.log(`User Sign-Out successful for ${email}`);
         res.clearCookie('sid');
         res.redirect('/login');
     })

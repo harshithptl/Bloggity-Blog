@@ -1,37 +1,63 @@
-const mysql = require('mysql');
+const mongoose = require('mongoose');
 const fs = require('fs');
 const Logger = require('../logger.js');
-const logger = new Logger();
 
-// Database details
-const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "your_password",
-    database: "blogs"
-  });
-  
-// Function to execute query and return results if applicable
-function execute_query(query){
-    return new Promise((resolve, reject) => {
-        con.query(query, function(err, result, fields) {
-            if (err) {
-                // Returning the error
-                reject(err);
-            }
-            
-            //Writing to a log file using a user defined log function that extended EventEmitter class
-            const writer = fs.createWriteStream('log.txt',{flags:'a'});
-            logger.once('Executed', ()=>{
-                writer.write(`Query executed ${query} \n`);
-            });
-            logger.log();
-            resolve(result);
-        });
+const Schema = mongoose.Schema;
+
+function log(message){
+    const logger = new Logger();
+    //Writing to a log file using a user defined log function that extended EventEmitter class
+    const writer = fs.createWriteStream('log.txt',{flags:'a'});
+    logger.once('Executed', ()=>{
+        writer.write(`${message} \n`);
     });
-    
+    logger.log();
 }
 
-module.exports={
-    execute_query
-}
+//Blog Schema
+const blogSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  snippet: {
+    type: String,
+    required: true,
+  },
+  body: {
+    type: String,
+    required: true
+  },
+  user_id: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true });
+
+//User Schema
+const userSchema = new Schema({
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    linkedin: {
+      type: String,
+      required: false
+    },
+    github: {
+        type: String,
+        required: false
+      }
+  }, { timestamps: true });
+
+const Blog = mongoose.model('Blog', blogSchema);
+const Users  = mongoose.model('Users', userSchema);
+module.exports = {Blog,Users,log};

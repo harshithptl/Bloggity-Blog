@@ -4,9 +4,9 @@ const db = require('../models/db');
 // Display all blogs on dashboard
 const all_blogs = (req, res) => {
     const user_id = req.session.user_id;
-    query=`SELECT * FROM BLOGS WHERE user_id=${user_id};`
-    db.execute_query(query)
-      .then(result => {
+    query=db.Blog.find({user_id:`${user_id}`});
+    query.then(result => {
+        db.log(`Displaying all blogs for ${user_id}`);
         if (req.session.flag==0){
           req.session.flag=1;
           res.render('index', { blogs: result, title: 'All blogs', linkedin: req.session.linkedin, github: req.session.github, name: req.session.name, flag: 0});
@@ -24,9 +24,9 @@ const all_blogs = (req, res) => {
   const blog_details = (req, res) => {
     const user_id = req.session.user_id;
     const blog_id = req.params.blog_id;
-    query=`SELECT * FROM BLOGS WHERE user_id=${user_id} AND id=${blog_id}`;
-    db.execute_query(query)
-      .then(result => {
+    query=db.Blog.findOne({user_id:`${user_id}`, _id: blog_id});
+    query.then(result => {
+        db.log(`Displaying ${blog_id} blog`);
         res.render('details', { blog: result, title: 'Blog Details', linkedin: req.session.linkedin, github: req.session.github });
       })
       .catch(err => {
@@ -43,9 +43,10 @@ const all_blogs = (req, res) => {
   const create_blog = (req, res) => {
     const user_id = req.session.user_id;
     values=req.body;
-    query=`INSERT INTO BLOGS (title,snippet,body,user_id) VALUES ("${values.title}","${values.snippet}","${values.body}",${user_id});`
-    db.execute_query(query)
-      .then(result => {
+    const blog = new db.Blog({user_id:`${user_id}`,title:`${values.title}`,snippet:`${values.snippet}`,body:`${values.body}`});
+    query=blog.save();
+    query.then(result => {
+        db.log(`New blog for ${user_id} created`);
         res.redirect('/blogs');
       })
       .catch(err => {
@@ -55,11 +56,10 @@ const all_blogs = (req, res) => {
   
   // Delete blog
   const delete_blog = (req, res) => {
-    const user_id = req.session.user_id;
     const blog_id = req.params.blog_id;
-    query=`DELETE FROM BLOGS WHERE user_id=${user_id} AND id=${blog_id};`;
-    db.execute_query(query)
-      .then(result => {
+    query=db.Blog.findByIdAndDelete(blog_id);
+    query.then(result => {
+        db.log(`Blog with id=${blog_id} deleted`);
         res.json({ redirect: '/blogs' });
       })
       .catch(err => {
