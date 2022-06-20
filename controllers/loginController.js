@@ -105,6 +105,7 @@ const create_user = (req, res) => {
 
 // Destroying session upon Sign-Out
 const signout = (req, res) => {
+    const email = req.session.email;
     req.session.destroy(err => {
         if (err) {
             return res.redirect('/');
