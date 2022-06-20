@@ -17,8 +17,9 @@ const mongo_db_password = process.env.MONGO_DB_PASSWORD
 //Connect to mongodb and listen for requests
 const dbURI = "mongodb+srv://" + mongo_db_username + ":" + mongo_db_password + "@blogs.ph2hv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
+const port = process.env.PORT || 3000
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => app.listen(process.env.PORT || 3000))   // Listen for requests on 3000 port if connection is successful
+  .then(result => app.listen(port))   // Listen for requests on 3000 port if connection is successful
   .catch(err => console.log(err));
 
 // Middleware and Static Files
