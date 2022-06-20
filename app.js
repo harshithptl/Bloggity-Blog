@@ -3,6 +3,8 @@ var session = require('express-session');
 const blogRoutes = require('./routes/blogRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const mongoose=require('mongoose');
+const dotenv = require('dotenv')
+dotenv.config()
 
 //Express app
 const app = express();
@@ -10,11 +12,13 @@ const app = express();
 //Register View Engine
 app.set('view engine', 'ejs');
 
+const mongo_db_username = process.env.MONGO_DB_USERNAME
+const mongo_db_password = process.env.MONGO_DB_PASSWORD
 //Connect to mongodb and listen for requests
-const dbURI = "mongodb+srv://username:password7@blogs.ph2hv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dbURI = "mongodb+srv://" + mongo_db_username + ":" + mongo_db_password + "@blogs.ph2hv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => app.listen(3000))   // Listen for requests on 3000 port if connection is successful
+  .then(result => app.listen(process.env.PORT || 3000))   // Listen for requests on 3000 port if connection is successful
   .catch(err => console.log(err));
 
 // Middleware and Static Files
