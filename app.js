@@ -19,7 +19,7 @@ const dbURI = "mongodb+srv://" + mongo_db_username + ":" + mongo_db_password + "
 
 const port = process.env.PORT || 3000
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => app.listen(port))   // Listen for requests on 3000 port if connection is successful
+  .then(result => app.listen(port, '0.0.0.0'))   // Listen for requests on 3000 port if connection is successful
   .catch(err => console.log(err));
 
 // Middleware and Static Files
